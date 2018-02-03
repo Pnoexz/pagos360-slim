@@ -8,7 +8,7 @@ $app->group('/api/v1', function () use ($app) {
     $app->group('/status', function () use ($app) {
         $app->get(
             '',
-            new \GameDatabase\Controllers\Status()
+            new \Pagos360\Controllers\Status\Ping()
         );
     });
 });

@@ -1,0 +1,31 @@
+{
+    "name": "pnoexz/pagos360-slim",
+    "type": "project",
+    "config": {
+        "framework": {
+            "php": "7"
+        }
+    },
+    "require": {
+        "slim/slim": "^3",
+        "vlucas/phpdotenv": "^2.4",
+        "vlucas/spot2": "^2.2",
+        "pnoexz/php-collection": "^0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.3",
+        "squizlabs/PHP_CodeSniffer": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pagos360\\": "src/"
+        }
+    },
+    "license": "GPL 3.0",
+    "authors": [
+        {
+            "name": "Matias Pino",
+            "email": "pnoexz@gmail.com"
+        }
+    ]
+}

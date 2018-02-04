@@ -2,6 +2,6 @@
 
 $config = [
     'settings' => [
-        'displayErrorDetails' => true,
+        'displayErrorDetails' => true, // @TODO use "debug" environment variable
     ]
 ];

@@ -9,6 +9,7 @@
     "require": {
         "slim/slim": "^3",
         "vlucas/phpdotenv": "^2.4",
+        "psr/log": "^1.0",
         "vlucas/spot2": "^2.2",
         "pnoexz/php-collection": "^0"
     },

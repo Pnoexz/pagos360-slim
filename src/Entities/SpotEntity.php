@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Matias Pino <pnoexz@gmail.com>
+ * @author  Matias Pino <pnoexz@gmail.com>
  * @license GPL v3.0
  */
 

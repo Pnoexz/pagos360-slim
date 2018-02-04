@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author  Matias Pino <pnoexz@gmail.com>
+ * @license GPL v3.0
+ */
 
 $rootPath = dirname(__DIR__);
 

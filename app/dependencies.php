@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author  Matias Pino <pnoexz@gmail.com>
+ * @license GPL v3.0
+ */
 
 use Slim\Container;
 
@@ -11,13 +15,12 @@ $container['errorHandler'] = function () {
     return new \Pagos360Slim\Handlers\ErrorHandler();
 };
 
-unset($container['phpErrorHandler']);
+unset($container['phpErrorHandler']); // @TODO remove, maybe
 
 /*******************************************************************************
  * Third party
  ******************************************************************************/
 $container['spot'] = function () {
-    /** @var Container $container */
     $config = new \Spot\Config();
     $config->addConnection("mysql", [
         "dbname" => getenv("DB_NAME"),
@@ -28,9 +31,7 @@ $container['spot'] = function () {
         "charset" => "utf8"
     ]);
 
-    $spot = new \Spot\Locator($config);
-
-    return $spot;
+    return new \Spot\Locator($config);
 };
 
 /*******************************************************************************

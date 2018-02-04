@@ -15,5 +15,5 @@ class DatabaseNotAvailableException extends MasterException
     protected $httpStatus = 503;
 
     /** @var string */
-    protected $level = 'critical';
+    protected $level = \Psr\Log\LogLevel::CRITICAL;
 }

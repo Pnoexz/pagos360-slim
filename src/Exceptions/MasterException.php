@@ -43,7 +43,7 @@ abstract class MasterException extends \Exception implements
      *
      * @var string
      */
-    protected $level = 'error';
+    protected $level = \Psr\Log\LogLevel::ERROR;
 
     /**
      * @var array

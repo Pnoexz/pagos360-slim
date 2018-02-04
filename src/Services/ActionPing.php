@@ -4,12 +4,12 @@
  * @license GPL v3.0
  */
 
-namespace Pagos360\Controllers\Status;
+namespace Pagos360\Services;
 
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
-class Ping
+class ActionPing
 {
     /**
      * @param Request  $request

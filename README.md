@@ -1,5 +1,7 @@
+##Environment configuration
+@todo
 
-###Vhost configuration
+##Vhost configuration
 
 ```
 <VirtualHost *:80>
@@ -43,7 +45,7 @@
 ```
 
 
-###Git hook (recommended)
+##Git hook (recommended)
 
 ```bash
 $ ln -s $(pwd)/pre-commit $(pwd)/.git/hooks/

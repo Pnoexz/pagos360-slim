@@ -13,10 +13,18 @@ define('PUBLIC_PATH', "$rootPath/public/");
 
 require VENDOR_PATH . 'autoload.php';
 
+/** Load configuration from environment variables use vlucas/phpdotenv */
 $dotenv = new \Dotenv\Dotenv(ROOT_PATH);
 if (file_exists(ROOT_PATH . '.env')) {
     $dotenv->load();
 }
+$dotenv->required([
+    'DB_NAME',
+    'DB_USER',
+    'DB_PASSWORD',
+    'DB_HOST',
+]);
+
 
 $config = [];
 require_once APP_PATH . '/config.php';

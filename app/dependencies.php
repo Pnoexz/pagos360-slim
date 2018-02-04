@@ -31,6 +31,8 @@ $container['spot'] = function () {
         "charset" => "utf8"
     ]);
 
+    // @TODO change mysql config to dsn
+
     return new \Spot\Locator($config);
 };
 

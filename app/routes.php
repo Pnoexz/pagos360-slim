@@ -8,7 +8,13 @@ $app->group('/api/v1', function () use ($app) {
     $app->group('/status', function () use ($app) {
         $app->get(
             '',
-            new \Pagos360\Controllers\Status\Ping()
+            new \Pagos360\Controllers\Status\ActionPing()
+        );
+        $app->get(
+            '/database',
+            new \Pagos360\Controllers\Status\ActionDatabase(
+                $app->getContainer()->get('databaseRepository')
+            )
         );
     });
 });

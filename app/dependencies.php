@@ -16,6 +16,7 @@ $container['errorHandler'] = function () {
 };
 
 unset($container['phpErrorHandler']); // @TODO remove, maybe
+//unset($container['errorHandler']); // @TODO remove, definitely
 
 /*******************************************************************************
  * Third party
@@ -42,6 +43,13 @@ $container['spot'] = function () {
 $container['databaseRepository'] = function (Container $container) {
     /** @var Container $container */
     return new \Pagos360\Repositories\DatabaseRepository(
+        $container->get('spot')
+    );
+};
+
+$container['clientsRepository'] = function (Container $container) {
+    /** @var Container $container */
+    return new \Pagos360\Repositories\ClientsRepository(
         $container->get('spot')
     );
 };

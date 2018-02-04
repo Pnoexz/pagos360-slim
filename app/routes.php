@@ -5,6 +5,22 @@
  */
 
 $app->group('/api/v1', function () use ($app) {
+    $app->group('/clients', function () use ($app) {
+        $app->get(
+            '',
+            new \Pagos360\Controllers\Clients\ActionGet(
+                $app->getContainer()->get('clientsRepository')
+            )
+        );
+
+        $app->get(
+            '/{id:\d+}',
+            new \Pagos360\Controllers\Clients\ActionGet(
+                $app->getContainer()->get('clientsRepository')
+            )
+        );
+    });
+
     $app->group('/status', function () use ($app) {
         $app->get(
             '',

@@ -12,7 +12,7 @@ class Client extends SpotEntity
      * Used by Spot. Matches the table name in the database.
      * @var string
      */
-    protected static $table = 'subpattern';
+    protected static $table = 'clients';
 
     /**
      * @var array
@@ -57,9 +57,9 @@ class Client extends SpotEntity
     public function toArray(): array
     {
         $output = [
-            'name' => $this->getField('name'),
-            'lastname' => $this->getField('lastname'),
-            'dni' => $this->getField('dni'),
+            'name' => (string) $this->getField('name'),
+            'lastname' => (string) $this->getField('lastname'),
+            'dni' => (int) $this->getField('dni'),
         ];
 
         if (!empty($this->email)) {

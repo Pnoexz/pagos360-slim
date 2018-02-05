@@ -8,7 +8,7 @@ $app->group('/api/v1', function () use ($app) {
     $app->group('/clients', function () use ($app) {
         $app->get(
             '',
-            new \Pagos360\Controllers\Clients\ActionGet(
+            new \Pagos360\Controllers\Clients\ActionGetAll(
                 $app->getContainer()->get('clientsRepository')
             )
         );

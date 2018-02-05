@@ -20,6 +20,13 @@ $app->group('/api/v1', function () use ($app) {
                 $app->getContainer()->get('clientsRepository')
             )
         );
+
+        $app->post(
+            '',
+            new \Pagos360\Controllers\Clients\ActionCreate(
+                $app->getContainer()->get('clientsRepository')
+            )
+        );
     });
 
     $app->group('/status', function () use ($app) {

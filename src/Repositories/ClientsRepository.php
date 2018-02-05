@@ -7,7 +7,12 @@
 namespace Pagos360\Repositories;
 
 use Pagos360\Entities\Client;
+use Pagos360\Exceptions\Clients\AlreadyExistsException;
+use Pagos360\Exceptions\Clients\EmailAlreadyRegisteredException;
+use Pagos360\Exceptions\DatabaseException;
 use Pagos360\Libraries\Pagination;
+
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Spot\Entity\Collection;
 use Spot\Mapper;
 
@@ -29,7 +34,7 @@ class ClientsRepository extends DatabaseRepository
      *
      * @return array
      */
-    public function getDefaultOrder(): array
+    protected function getDefaultOrder(): array
     {
         return [
             'lastname' => 'ASC',
@@ -73,6 +78,47 @@ class ClientsRepository extends DatabaseRepository
         }
 
         return $collection;
+    }
+
+    /**
+     * Creates and saves the entity object.
+     *
+     * @param $name
+     * @param $lastname
+     * @param $dni
+     * @param $email
+     *
+     * @return Client
+     * @throws AlreadyExistsException
+     * @throws DatabaseException
+     * @throws EmailAlreadyRegisteredException
+     */
+    public function create($name, $lastname, $dni, $email)
+    {
+        $mapper = $this->getMapper();
+        /** @var Client $entity */
+        $entity = $mapper->build([
+            'name' => $name,
+            'lastname' => $lastname,
+            'dni' => $dni,
+            'email' => $email,
+        ]);
+
+        try {
+            $mapper->save($entity);
+        } catch (UniqueConstraintViolationException $e) {
+            $previousMessage = $e->getMessage();
+            if (strpos($previousMessage, "'clients_UN_email'")) {
+                throw new EmailAlreadyRegisteredException();
+            } elseif (strpos($previousMessage, "'clients_UN_all_required'")) {
+                throw new AlreadyExistsException();
+            }
+            throw new DatabaseException([], $e);
+        } catch (\Exception $e) {
+            throw new DatabaseException([], $e);
+        }
+
+        return $entity;
     }
 
     /**

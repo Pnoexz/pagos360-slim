@@ -36,8 +36,8 @@ class ActionGet extends ClientsController
         $id = $args['id'];
         $client = $this->clientsRepository->get($id);
 
-        $output = $this->buildResponseBodyForEntity($client);
+        $body = $this->buildResponseBodyForEntity($client);
 
-        return $response->withJson($output, 200);
+        return $response->withJson($body, 200);
     }
 }

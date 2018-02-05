@@ -116,7 +116,7 @@ abstract class MasterException extends \Exception implements
         $output = [
             'class' => get_class($this),
             'message' => $this->message,
-            'HTTP status code' => $this->httpStatus,
+            'httpStatusCode' => $this->httpStatus,
         ];
 
         if (!empty($this->data)) {

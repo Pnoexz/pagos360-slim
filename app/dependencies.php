@@ -32,7 +32,7 @@ $container['spot'] = function () {
         "charset" => "utf8"
     ]);
 
-    // @TODO change mysql config to dsn
+    // @TODO change mysql config to dsn: $cfg->addConnection('mysql', 'mysql://user:password@localhost/database_name');
 
     return new \Spot\Locator($config);
 };
@@ -49,7 +49,6 @@ $container['pagination'] = function () {
  ******************************************************************************/
 /** @noinspection PhpDocSignatureInspection */
 $container['databaseRepository'] = function (Container $container) {
-    /** @var Container $container */
     return new \Pagos360\Repositories\DatabaseRepository(
         $container->get('spot')
     );

@@ -30,9 +30,13 @@ class ErrorHandler
         }
 
         $body = [
-            "status" => "error",
-            "message" => "Unknown error.",
+            'status' => 'error',
+            'message' => 'Unknown error.',
         ];
+
+        if (getenv('DEBUG')) { // @todo inject this
+            $body['exceptionMessage'] = $exception->getMessage();
+        }
 
         return $response->withJson($body, 500);
     }

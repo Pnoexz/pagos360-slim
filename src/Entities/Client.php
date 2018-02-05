@@ -15,6 +15,7 @@ class Client extends SpotEntity implements EntityInterface
     protected static $table = 'clients';
 
     /**
+     * Used by Spot. Matches the table schema in the database.
      * @var array
      */
     protected static $fields = [
@@ -42,7 +43,7 @@ class Client extends SpotEntity implements EntityInterface
     ];
 
     /**
-     * Used by Spot. Matches the table schema in the database.
+     * Used by Spot.
      *
      * @return array
      */

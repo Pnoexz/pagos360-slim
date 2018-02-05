@@ -25,6 +25,19 @@ class ClientsRepository extends DatabaseRepository
     }
 
     /**
+     * Returns the default order of values in the format required by Spot.
+     *
+     * @return array
+     */
+    public function getDefaultOrder(): array
+    {
+        return [
+            'lastname' => 'ASC',
+            'name' => 'ASC',
+        ];
+    }
+
+    /**
      * @param $id
      *
      * @return Client
@@ -46,32 +59,20 @@ class ClientsRepository extends DatabaseRepository
         $offset = $pagination->getSqlOffset();
         $limit = $pagination->getSqlLimit();
 
-        $query = $this->getMapper()->all()->limit($limit, $offset);
+        $query = $this->getMapper()
+            ->all()
+            ->order($this->getDefaultOrder())
+            ->limit($limit, $offset);
         $collection = $query->execute();
 
         if (!empty($pagination)) {
-            $pagination->setTotalItems($this->countAll());
+            $totalItems = $this->getTotalItemsFromQuery($query);
+            if (!empty($totalItems)) {
+                $pagination->setTotalItems($totalItems);
+            }
         }
 
         return $collection;
-    }
-
-    /**
-     * Returns an int indicating the total number of records in the database.
-     * For performance reasons, we run this query directly from the PDO object
-     * provided by \Doctrine\DBAL\Connection. Since this doesn't use user input
-     * (for now) it isn't required to prepare the statement.
-     *
-     * @return int
-     */
-    public function countAll()
-    {
-        $conn = $this->getConnection();
-        $query = "SELECT COUNT(id) FROM clients"; // @TODO add a method to get the table
-
-        $pdoStatment = $conn->query($query);
-
-        return (int) $pdoStatment->fetchColumn(0);
     }
 
     /**

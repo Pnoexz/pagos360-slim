@@ -83,18 +83,22 @@ class ClientsRepository extends DatabaseRepository
     /**
      * Creates and saves the entity object.
      *
-     * @param $name
-     * @param $lastname
-     * @param $dni
-     * @param $email
+     * @param string      $name
+     * @param string      $lastname
+     * @param int         $dni
+     * @param string|null $email
      *
      * @return Client
      * @throws AlreadyExistsException
      * @throws DatabaseException
      * @throws EmailAlreadyRegisteredException
      */
-    public function create($name, $lastname, $dni, $email)
-    {
+    public function create(
+        string $name,
+        string $lastname,
+        int $dni,
+        string $email = null
+    ) {
         $mapper = $this->getMapper();
         /** @var Client $entity */
         $entity = $mapper->build([
@@ -107,6 +111,9 @@ class ClientsRepository extends DatabaseRepository
         try {
             $mapper->save($entity);
         } catch (UniqueConstraintViolationException $e) {
+            /* Creation failed because there's already a value. We need to
+             determine which UNIQUE CONTRAINT it breaks to show the proper
+             error message */
             $previousMessage = $e->getMessage();
             if (strpos($previousMessage, "'clients_UN_email'")) {
                 throw new EmailAlreadyRegisteredException();

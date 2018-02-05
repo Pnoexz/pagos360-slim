@@ -10,7 +10,7 @@ use Pagos360\Repositories\ClientsRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
-class ActionGet
+class ActionGet extends ClientsController
 {
     /** @var ClientsRepository */
     protected $clientsRepository;
@@ -36,6 +36,8 @@ class ActionGet
         $id = $args['id'];
         $client = $this->clientsRepository->get($id);
 
-        return $response->withJson($client, 200);
+        $output = $this->buildResponseBodyForEntity($client);
+
+        return $response->withJson($output, 200);
     }
 }

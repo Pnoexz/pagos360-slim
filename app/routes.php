@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Matias Pino <pnoexz@gmail.com>
+ * @author  Matias Pino <pnoexz@gmail.com>
  * @license GPL v3.0
  */
 
@@ -9,7 +9,8 @@ $app->group('/api/v1', function () use ($app) {
         $app->get(
             '',
             new \Pagos360\Controllers\Clients\ActionGetAll(
-                $app->getContainer()->get('clientsRepository')
+                $app->getContainer()->get('clientsRepository'),
+                $app->getContainer()->get('pagination')
             )
         );
 

@@ -6,23 +6,31 @@
 
 namespace Pagos360\Controllers\Clients;
 
+use Pagos360\Libraries\Pagination;
 use Pagos360\Repositories\ClientsRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
-class ActionGetAll
+class ActionGetAll extends ClientsController
 {
     /** @var ClientsRepository */
     protected $clientsRepository;
 
+    /** @var Pagination */
+    protected $pagination;
+
     /**
-     * ActionGet constructor.
+     * ActionGetAll constructor.
      *
      * @param ClientsRepository $clientRepository
+     * @param Pagination        $pagination
      */
-    public function __construct(ClientsRepository $clientRepository)
-    {
+    public function __construct(
+        ClientsRepository $clientRepository,
+        Pagination $pagination
+    ) {
         $this->clientsRepository = $clientRepository;
+        $this->pagination = $pagination;
     }
 
     /**
@@ -33,9 +41,17 @@ class ActionGetAll
      */
     public function __invoke(Request $request, Response $response, $args)
     {
-        $id = $args['id'];
-        $client = $this->clientsRepository->get($id);
+        $pagination = $this->pagination;
+        $currentPage = $request->getParam('currentPage');
+        $itemsPerPage = $request->getParam('itemsPerPage');
 
-        return $response->withJson($client, 200);
+        $pagination->setCurrentPage($currentPage);
+        $pagination->setItemsPerPage($itemsPerPage);
+
+        $clients = $this->clientsRepository->getAll($pagination);
+
+        $body = $this->buildResponseBodyForListing($clients, $pagination);
+
+        return $response->withJson($body, 200);
     }
 }

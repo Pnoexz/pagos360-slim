@@ -4,12 +4,14 @@
  * @license GPL v3.0
  */
 
-namespace Pagos360\Exceptions;
+namespace Pagos360\Exceptions\Http;
 
-abstract class NotFoundException extends MasterException
+use Pagos360\Exceptions\MasterException;
+
+abstract class PayloadTooLargeException extends MasterException
 {
     /** @var int */
-    protected $httpStatus = 404;
+    protected $httpStatus = 413;
 
     /** @var string */
     protected $level = \Psr\Log\LogLevel::WARNING;

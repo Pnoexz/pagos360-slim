@@ -47,6 +47,7 @@ $container['pagination'] = function () {
 /*******************************************************************************
  * Repositories
  ******************************************************************************/
+/** @noinspection PhpDocSignatureInspection */
 $container['databaseRepository'] = function (Container $container) {
     /** @var Container $container */
     return new \Pagos360\Repositories\DatabaseRepository(

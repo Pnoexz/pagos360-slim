@@ -6,7 +6,7 @@
 
 namespace Pagos360\Entities;
 
-class Client extends SpotEntity
+class Client extends SpotEntity implements EntityInterface
 {
     /**
      * Used by Spot. Matches the table name in the database.

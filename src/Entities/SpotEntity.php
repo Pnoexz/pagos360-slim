@@ -8,7 +8,7 @@ namespace Pagos360\Entities;
 
 use Spot\Entity;
 
-abstract class SpotEntity extends Entity implements EntityInterface
+abstract class SpotEntity extends Entity
 {
     /**
      * @param string $field
@@ -26,13 +26,5 @@ abstract class SpotEntity extends Entity implements EntityInterface
     public function getId(): int
     {
         return (int) $this->getField('id');
-    }
-
-    public function toArray(): array
-    {
-    }
-
-    public function jsonSerialize(): array
-    {
     }
 }

@@ -8,6 +8,7 @@ namespace Pagos360\Repositories;
 
 use Pagos360\Entities\Client;
 use Pagos360\Libraries\Pagination;
+use Spot\Entity\Collection;
 use Spot\Mapper;
 
 class ClientsRepository extends DatabaseRepository
@@ -35,18 +36,24 @@ class ClientsRepository extends DatabaseRepository
         return $entity;
     }
 
+    /**
+     * @param Pagination|null $pagination
+     *
+     * @return Collection
+     */
     public function getAll(Pagination $pagination = null)
     {
         $offset = $pagination->getSqlOffset();
         $limit = $pagination->getSqlLimit();
 
-        $entity = $this->getMapper()->all()->limit($limit, $offset);
+        $query = $this->getMapper()->all()->limit($limit, $offset);
+        $collection = $query->execute();
 
         if (!empty($pagination)) {
             $pagination->setTotalItems($this->countAll());
         }
 
-        return $entity;
+        return $collection;
     }
 
     /**

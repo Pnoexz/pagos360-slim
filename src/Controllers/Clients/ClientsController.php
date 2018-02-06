@@ -63,16 +63,20 @@ abstract class ClientsController extends BaseController
     }
 
     /**
+     * Prepares the params to be processed. This include trimming extra white
+     * space and making name and lastname all uppercase.
+     *
      * @param array $params
      *
      * @return array
      */
     public function transformParams(array $params)
     {
-        $params['name'] = strtoupper($params['name']);
-        $params['lastname'] = strtoupper($params['lastname']);
+        $params['name'] = trim(strtoupper($params['name']));
+        $params['lastname'] = trim(strtoupper($params['lastname']));
         $params['dni'] = (int) $params['dni'];
-        $params['email'] = (!empty($params['email'])) ? $params['email'] : null;
+        $params['email'] = (!empty($params['email'])) ?
+            trim($params['email']) : null;
 
         return $params;
     }

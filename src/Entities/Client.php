@@ -6,6 +6,12 @@
 
 namespace Pagos360\Entities;
 
+/**
+ * @property string name
+ * @property string lastname
+ * @property int dni
+ * @property string email
+ */
 class Client extends SpotEntity implements EntityInterface
 {
     /**

@@ -18,6 +18,10 @@ use Spot\Mapper;
 
 class ClientsRepository extends DatabaseRepository
 {
+    const ENTITY_ACTION_SAVE = 'save';
+
+    const ENTITY_ACTION_UPDATE = 'update';
+
     /** @var string */
     protected $entity = '\Pagos360\Entities\Client';
 
@@ -96,19 +100,31 @@ class ClientsRepository extends DatabaseRepository
         int $dni,
         string $email = null
     ) {
-        /** @var Client $entity */
-        $entity = $this->getMapper()->build([
+        /** @var Client $client */
+        $client = $this->getMapper()->build([
             'name' => $name,
             'lastname' => $lastname,
             'dni' => $dni,
             'email' => $email,
         ]);
 
-        $this->saveEntity($entity);
+        $this->saveEntity($client, self::ENTITY_ACTION_SAVE);
 
-        return $entity;
+        return $client;
     }
 
+    /**
+     * Edits the client. This method could use some improving, maybe with
+     * setters in the entity.
+     *
+     * @param Client      $client
+     * @param string      $name
+     * @param string      $lastname
+     * @param int         $dni
+     * @param string|null $email
+     *
+     * @return Client
+     */
     public function edit(
         Client $client,
         string $name,
@@ -116,7 +132,14 @@ class ClientsRepository extends DatabaseRepository
         int $dni,
         string $email = null
     ) {
-        // @todo
+        $client->name = $name;
+        $client->lastname = $lastname;
+        $client->dni = $dni;
+        $client->email = $email;
+
+        $this->saveEntity($client, self::ENTITY_ACTION_UPDATE);
+
+        return $client;
     }
 
     /**
@@ -129,15 +152,27 @@ class ClientsRepository extends DatabaseRepository
      * Duplicate entry 'FOO-BA-1376194' for key 'clients_UN_all_required'
      *
      * @param Client $entity
+     * @param string $action
      *
-     * @return Client
      * @throws AlreadyExistsException
      * @throws DatabaseException
      * @throws EmailAlreadyRegisteredException
      */
-    protected function saveEntity(Client $entity)
+    protected function saveEntity(Client $entity, string $action = 'save')
     {
         try {
+            switch ($action) {
+                case self::ENTITY_ACTION_SAVE:
+                    $this->getMapper()->save($entity);
+                    break;
+                case self::ENTITY_ACTION_UPDATE:
+                    $this->getMapper()->update($entity);
+                    break;
+                default:
+                    throw new \InvalidArgumentException(
+                        "Invalid entity action: $action"
+                    );
+            }
             $this->getMapper()->save($entity);
         } catch (UniqueConstraintViolationException $e) {
             $previousMessage = $e->getMessage();
@@ -150,8 +185,6 @@ class ClientsRepository extends DatabaseRepository
         } catch (\Exception $e) {
             throw new DatabaseException([], $e);
         }
-
-        return $entity;
     }
 
     /**

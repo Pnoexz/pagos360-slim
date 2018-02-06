@@ -34,6 +34,13 @@ $app->group('/api/v1', function () use ($app) {
                 $app->getContainer()->get('clientsRepository')
             )
         );
+
+        $app->delete(
+            '/{id:\d+}',
+            new \Pagos360\Controllers\Clients\ActionDelete(
+                $app->getContainer()->get('clientsRepository')
+            )
+        );
     });
 
     $app->group('/status', function () use ($app) {

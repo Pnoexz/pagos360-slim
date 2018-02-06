@@ -64,6 +64,7 @@ class Client extends SpotEntity implements EntityInterface
     public function toArray(): array
     {
         $output = [
+            'id' => $this->getId(),
             'name' => (string) $this->getField('name'),
             'lastname' => (string) $this->getField('lastname'),
             'dni' => (int) $this->getField('dni'),

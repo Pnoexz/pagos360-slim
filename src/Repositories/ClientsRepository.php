@@ -59,26 +59,33 @@ class ClientsRepository extends DatabaseRepository
     }
 
     /**
+     * Gets a paginated list of clients.
+     *
      * @param Pagination|null $pagination
      *
      * @return Collection
+     * @throws DatabaseException
      */
     public function getAll(Pagination $pagination = null)
     {
         $offset = $pagination->getSqlOffset();
         $limit = $pagination->getSqlLimit();
 
-        $query = $this->getMapper()
-            ->all()
-            ->order($this->getDefaultOrder())
-            ->limit($limit, $offset);
-        $collection = $query->execute();
+        try {
+            $query = $this->getMapper()
+                ->all()
+                ->order($this->getDefaultOrder())
+                ->limit($limit, $offset);
+            $collection = $query->execute();
 
-        if (!empty($pagination)) {
-            $totalItems = $this->getTotalItemsFromQuery($query);
-            if (!empty($totalItems)) {
-                $pagination->setTotalItems($totalItems);
+            if (!empty($pagination)) {
+                $totalItems = $this->getTotalItemsFromQuery($query);
+                if (!empty($totalItems)) {
+                    $pagination->setTotalItems($totalItems);
+                }
             }
+        } catch (\Exception $e) {
+            throw new DatabaseException([], $e);
         }
 
         return $collection;
@@ -182,6 +189,20 @@ class ClientsRepository extends DatabaseRepository
                 throw new AlreadyExistsException();
             }
             throw new DatabaseException([], $e);
+        } catch (\Exception $e) {
+            throw new DatabaseException([], $e);
+        }
+    }
+
+    /**
+     * @param Client $entity
+     *
+     * @throws DatabaseException
+     */
+    public function delete(Client $entity)
+    {
+        try {
+            $this->getMapper()->delete($entity);
         } catch (\Exception $e) {
             throw new DatabaseException([], $e);
         }

@@ -37,7 +37,7 @@ class DatabaseRepository
 
     /**
      * Takes a Query object as a parater and removes the limit part of the
-     * query, replaces the select with a simple COUNT(*), and removed the
+     * query, replaces the select with a simple COUNT(*), and removes the
      * order to slightly improve performance.
      *
      * @param Query $query

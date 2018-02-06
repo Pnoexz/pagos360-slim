@@ -89,9 +89,6 @@ class ClientsRepository extends DatabaseRepository
      * @param string|null $email
      *
      * @return Client
-     * @throws AlreadyExistsException
-     * @throws DatabaseException
-     * @throws EmailAlreadyRegisteredException
      */
     public function create(
         string $name,
@@ -99,21 +96,50 @@ class ClientsRepository extends DatabaseRepository
         int $dni,
         string $email = null
     ) {
-        $mapper = $this->getMapper();
         /** @var Client $entity */
-        $entity = $mapper->build([
+        $entity = $this->getMapper()->build([
             'name' => $name,
             'lastname' => $lastname,
             'dni' => $dni,
             'email' => $email,
         ]);
 
+        $this->saveEntity($entity);
+
+        return $entity;
+    }
+
+    public function edit(
+        Client $client,
+        string $name,
+        string $lastname,
+        int $dni,
+        string $email = null
+    ) {
+        // @todo
+    }
+
+    /**
+     * Tries to save an entity. If this fails, we need to catch DBAL's
+     * UniqueConstraintViolationException and determine which UNIQUE CONSTRAIN
+     * check is failing to show a proper error message. The DBAL exception looks
+     * like this (all in one line):
+     *
+     * SQLSTATE[23000]: Integrity constraint violation: 1062
+     * Duplicate entry 'FOO-BA-1376194' for key 'clients_UN_all_required'
+     *
+     * @param Client $entity
+     *
+     * @return Client
+     * @throws AlreadyExistsException
+     * @throws DatabaseException
+     * @throws EmailAlreadyRegisteredException
+     */
+    protected function saveEntity(Client $entity)
+    {
         try {
-            $mapper->save($entity);
+            $this->getMapper()->save($entity);
         } catch (UniqueConstraintViolationException $e) {
-            /* Creation failed because there's already a value. We need to
-             determine which UNIQUE CONTRAINT it breaks to show the proper
-             error message */
             $previousMessage = $e->getMessage();
             if (strpos($previousMessage, "'clients_UN_email'")) {
                 throw new EmailAlreadyRegisteredException();

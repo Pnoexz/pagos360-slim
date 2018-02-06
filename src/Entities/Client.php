@@ -59,6 +59,8 @@ class Client extends SpotEntity implements EntityInterface
     }
 
     /**
+     * Exports the instance to an array.
+     *
      * @return array
      */
     public function toArray(): array

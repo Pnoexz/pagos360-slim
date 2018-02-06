@@ -19,10 +19,7 @@ if (file_exists(ROOT_PATH . '.env')) {
     $dotenv->load();
 }
 $dotenv->required([
-    'DB_NAME',
-    'DB_USER',
-    'DB_PASSWORD',
-    'DB_HOST',
+    'DATABASE_DSN',
 ]);
 
 

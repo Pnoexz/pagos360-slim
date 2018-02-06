@@ -18,8 +18,10 @@ use Spot\Mapper;
 
 class ClientsRepository extends DatabaseRepository
 {
+    /** @var string */
     const ENTITY_ACTION_SAVE = 'save';
 
+    /** @var string */
     const ENTITY_ACTION_UPDATE = 'update';
 
     /** @var string */
@@ -195,14 +197,19 @@ class ClientsRepository extends DatabaseRepository
     }
 
     /**
-     * @param Client $entity
+     * @param $id
      *
      * @throws DatabaseException
+     * @internal param Client $entity
+     *
      */
-    public function delete(Client $entity)
+    public function delete($id)
     {
         try {
-            $this->getMapper()->delete($entity);
+            $client = $this->get($id);
+            $this->getMapper()->delete($client);
+        } catch (\Pagos360\Exceptions\Clients\NotFoundException $e) {
+            // Client doesn't exists,
         } catch (\Exception $e) {
             throw new DatabaseException([], $e);
         }

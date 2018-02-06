@@ -15,24 +15,21 @@ $container['errorHandler'] = function () {
     return new \Pagos360Slim\Handlers\ErrorHandler();
 };
 
-unset($container['phpErrorHandler']); // @TODO remove, maybe
-//unset($container['errorHandler']); // @TODO remove, definitely
-
 /*******************************************************************************
  * Third party
  ******************************************************************************/
 $container['spot'] = function () {
     $config = new \Spot\Config();
-    $config->addConnection("mysql", [
+    /*$config->addConnection("mysql", [
         "dbname" => getenv("DB_NAME"),
         "user" => getenv("DB_USER"),
         "password" => getenv("DB_PASSWORD"),
         "host" => getenv("DB_HOST"),
         "driver" => "pdo_mysql",
         "charset" => "utf8"
-    ]);
+    ]);*/
 
-    // @TODO change mysql config to dsn: $cfg->addConnection('mysql', 'mysql://user:password@localhost/database_name');
+    $config->addConnection('mysql', getenv('DATABASE_DSN'));
 
     return new \Spot\Locator($config);
 };

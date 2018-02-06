@@ -12,6 +12,17 @@ use Slim\Http\Request;
 class ErrorHandler
 {
     /**
+     * Whether or not to show extra debug info.
+     * @var bool
+     */
+    protected $debug;
+
+    public function __construct($debug = false)
+    {
+        $this->debug = $debug;
+    }
+
+    /**
      * @param Request    $request
      * @param Response   $response
      * @param \Exception $exception
@@ -34,7 +45,7 @@ class ErrorHandler
             'message' => 'Unknown error.',
         ];
 
-        if (getenv('DEBUG')) { // @todo inject this
+        if ($this->debug) {
             $body['exceptionMessage'] = $exception->getMessage();
         }
 

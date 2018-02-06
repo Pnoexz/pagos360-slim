@@ -50,7 +50,7 @@ class DatabaseRepository
         $countQuery
             ->select('COUNT(*)')
             ->order([])
-            ->limit(null, null);
+            ->limit(null, 0);
 
         return $countQuery->count();
     }

@@ -10,71 +10,6 @@
         "https"
     ],
     "paths": {
-        "/clients/{clientId}": {
-            "get": {
-                "tags": [
-                    "Clients"
-                ],
-                "summary": "Get a client",
-                "parameters": [
-                    {
-                        "name": "clientId",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "$ref": "#/definitions/ClientsGetOneResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Clients"
-                ],
-                "summary": "Edit a client",
-                "parameters": [
-                    {
-                        "name": "clientId",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "successful operation",
-                        "schema": {
-                            "$ref": "#/definitions/ClientsGetOneResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Clients"
-                ],
-                "summary": "Deletes a client",
-                "parameters": [
-                    {
-                        "name": "clientId",
-                        "in": "path",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/clients": {
             "get": {
                 "tags": [
@@ -103,6 +38,109 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Create a new client",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ClientInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ClientsGetOneResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/clients/{clientId}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get a client",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ClientsGetOneResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/ClientNotFoundExceptionResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Edit a client",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ClientInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ClientsGetOneResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Deletes a client",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successful operation"
+                    }
+                }
             }
         },
         "/status/database": {
@@ -117,6 +155,12 @@
                         "schema": {
                             "$ref": "#/definitions/StatusOkResponse"
                         }
+                    },
+                    "503": {
+                        "description": "Service not available",
+                        "schema": {
+                            "$ref": "#/definitions/DatabaseNotAvailableResponse"
+                        }
                     }
                 }
             }
@@ -129,10 +173,13 @@
                 "summary": "General system status",
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "schema": {
                             "$ref": "#/definitions/StatusOkResponse"
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -159,6 +206,23 @@
                 }
             }
         },
+        "ClientNotFoundExceptionResponse": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/MasterException"
+                },
+                {
+                    "required": [
+                        "class"
+                    ],
+                    "properties": {
+                        "class": {
+                            "example": "Pagos360\\Exceptions\\Clients\\NotFoundException"
+                        }
+                    }
+                }
+            ]
+        },
         "ClientsGetAllResponse": {
             "properties": {
                 "entity": {
@@ -177,15 +241,21 @@
             }
         },
         "DatabaseNotAvailableResponse": {
-            "required": [
-                "status"
-            ],
-            "properties": {
-                "status": {
-                    "type": "string",
-                    "example": "OK"
+            "allOf": [
+                {
+                    "$ref": "#/definitions/MasterException"
+                },
+                {
+                    "required": [
+                        "class"
+                    ],
+                    "properties": {
+                        "class": {
+                            "example": "Pagos360\\Exceptions\\DatabaseNotAvailableException"
+                        }
+                    }
                 }
-            }
+            ]
         },
         "StatusOkResponse": {
             "required": [
@@ -227,6 +297,48 @@
                 }
             }
         },
+        "ClientInput": {
+            "required": [
+                "name",
+                "lastname",
+                "dni"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Foo"
+                },
+                "lastname": {
+                    "type": "string",
+                    "example": "Bar"
+                },
+                "dni": {
+                    "type": "integer",
+                    "example": "12345678"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "example@gmail.com"
+                }
+            }
+        },
+        "MasterException": {
+            "properties": {
+                "message": {
+                    "description": "Contains the human readable the consumer SHOULD display in case no\ntranslation is available. Consumers MUST NOT rely on this message to\nidentify the exception.",
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "description": "Http status for this response. This is provided in case\n           the client doesn't support HTTP statuses.",
+                    "type": "integer",
+                    "example": "503"
+                },
+                "class": {
+                    "description": "Stores the unique string to identify this exception and act accordingly.",
+                    "type": "string"
+                }
+            }
+        },
         "Pagination": {
             "properties": {
                 "currentPage": {
@@ -242,17 +354,6 @@
                     "format": "int32"
                 }
             }
-        }
-    },
-    "responses": {
-        "503": {
-            "description": "Service not available",
-            "schema": {
-                "$ref": "#/definitions/DatabaseNotAvailableResponse"
-            }
-        },
-        "500": {
-            "description": "Internal server error"
         }
     }
 }

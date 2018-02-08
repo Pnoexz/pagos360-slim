@@ -37,6 +37,32 @@ namespace Pagos360\Entities;
  *   ),
  * ),
  *
+ *
+ * @SWG\Definition(
+ *   definition="ClientInput",
+ *   required={"name", "lastname", "dni"},
+ *    @SWG\Property(
+ *      property="name",
+ *      type="string",
+ *      example="Foo",
+ *    ),
+ *    @SWG\Property(
+ *      property="lastname",
+ *      type="string",
+ *      example="Bar",
+ *    ),
+ *    @SWG\Property(
+ *      property="dni",
+ *      type="integer",
+ *      example="12345678",
+ *    ),
+ *    @SWG\Property(
+ *      property="email",
+ *      type="string",
+ *      example="example@gmail.com",
+ *    ),
+ *  ),
+ *
  * @property string name
  * @property string lastname
  * @property int dni

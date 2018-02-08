@@ -17,6 +17,11 @@ class ErrorHandler
      */
     protected $debug;
 
+    /**
+     * ErrorHandler constructor.
+     *
+     * @param bool $debug
+     */
     public function __construct($debug = false)
     {
         $this->debug = $debug;

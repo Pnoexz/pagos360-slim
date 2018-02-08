@@ -10,6 +10,26 @@ use Pagos360\Repositories\ClientsRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
+/**
+ * @SWG\Post(
+ *   path="/clients",
+ *   summary="Create a new client",
+ *   tags={"Clients"},
+ *   @SWG\Parameter(
+ *     name="client",
+ *     in="body",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/ClientInput")
+ *   ),
+ *   @SWG\Response(
+ *     response=201,
+ *     description="successful operation",
+ *     @SWG\Items(
+ *      ref="#/definitions/ClientsGetOneResponse",
+ *     ),
+ *   ),
+ * ),
+ */
 class ActionCreate extends ClientsController
 {
     /** @var ClientsRepository */

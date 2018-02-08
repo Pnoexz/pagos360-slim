@@ -11,7 +11,6 @@ use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
 /**
- * @todo: add parameters
  * @SWG\Put(
  *   path="/clients/{clientId}",
  *   summary="Edit a client",
@@ -22,11 +21,17 @@ use Slim\Http\Response as Response;
  *     required=true,
  *     type="integer",
  *   ),
+ *   @SWG\Parameter(
+ *     name="client",
+ *     in="body",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/ClientInput")
+ *   ),
  *   @SWG\Response(
- *     response=201,
+ *     response=200,
  *     description="successful operation",
  *     @SWG\Items(
- *      ref="#/definitions/ClientsGetOneResponse"),
+ *      ref="#/definitions/ClientsGetOneResponse",
  *     ),
  *   ),
  * ),

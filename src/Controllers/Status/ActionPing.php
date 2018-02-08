@@ -16,9 +16,9 @@ use Slim\Http\Response as Response;
  *   tags={"Status"},
  *   @SWG\Response(
  *     response=200,
- *     description="successful operation",
+ *     description="Successful operation",
  *     @SWG\Items(
- *      ref="#/definitions/StatusOkResponse"),
+ *      ref="#/definitions/StatusOkResponse",
  *     ),
  *   ),
  *   @SWG\Response(
@@ -30,12 +30,12 @@ use Slim\Http\Response as Response;
  * @SWG\Definition(
  *   definition="StatusOkResponse",
  *   required={"status"},
- *    @SWG\Property(
- *      property="status",
- *      type="string",
- *      example="OK",
- *    ),
- *  ),
+ *   @SWG\Property(
+ *     property="status",
+ *     type="string",
+ *     example="OK",
+ *   ),
+ * ),
  */
 class ActionPing
 {

@@ -19,29 +19,32 @@ use Slim\Http\Response as Response;
  *     response=200,
  *     description="successful operation",
  *     @SWG\Items(
- *      ref="#/definitions/StatusOkResponse"),
+ *      ref="#/definitions/StatusOkResponse",
  *     ),
  *   ),
  *   @SWG\Response(
  *     response="503",
  *     description="Service not available",
- *     @SWG\Items(
- *      ref="#/definitions/DatabaseNotAvailableResponse"),
+ *     @SWG\Schema(
+ *       ref="#/definitions/DatabaseNotAvailableResponse"),
  *     ),
  *   ),
  * ),
  *
  * @SWG\Definition(
  *   definition="DatabaseNotAvailableResponse",
+ *   allOf={
+ *     @SWG\Schema(ref="#/definitions/MasterException"),
+ *     @SWG\Schema(
+ *       required={"class"},
+ *       @SWG\Property(
+ *         property="class",
+ *         example="Pagos360\Exceptions\DatabaseNotAvailableException",
+ *       ),
+ *     ),
+ *   },
+ * ),
  *
- *   required={"status"},
- *    @SWG\Property(
- *      property="status",
- *      type="string",
- *      example="OK",
- *    ),
- *  ),
-
  */
 class ActionDatabase
 {

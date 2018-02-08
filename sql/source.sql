@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS clients;
 
 -- Table structure
-CREATE TABLE IF NOT EXISTS clients
+CREATE TABLE clients
 (
     id INT(8) PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(128),

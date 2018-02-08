@@ -10,6 +10,42 @@ use Pagos360\Repositories\DatabaseRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
+/**
+ * @SWG\Get(
+ *   path="/status/database",
+ *   summary="Database status",
+ *   tags={"Status"},
+ *   @SWG\Response(
+ *     response=200,
+ *     description="successful operation",
+ *     @SWG\Items(
+ *      ref="#/definitions/StatusOkResponse",
+ *     ),
+ *   ),
+ *   @SWG\Response(
+ *     response="503",
+ *     description="Service not available",
+ *     @SWG\Schema(
+ *       ref="#/definitions/DatabaseNotAvailableResponse"),
+ *     ),
+ *   ),
+ * ),
+ *
+ * @SWG\Definition(
+ *   definition="DatabaseNotAvailableResponse",
+ *   allOf={
+ *     @SWG\Schema(ref="#/definitions/MasterException"),
+ *     @SWG\Schema(
+ *       required={"class"},
+ *       @SWG\Property(
+ *         property="class",
+ *         example="Pagos360\Exceptions\DatabaseNotAvailableException",
+ *       ),
+ *     ),
+ *   },
+ * ),
+ *
+ */
 class ActionDatabase
 {
     public $databaseRepository;

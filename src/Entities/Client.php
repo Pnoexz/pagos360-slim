@@ -7,6 +7,62 @@
 namespace Pagos360\Entities;
 
 /**
+ * @SWG\Definition(
+ *   definition="Client",
+ *   required={"name", "langID", "type"},
+ *   @SWG\Property(
+ *     property="id",
+ *     type="integer",
+ *     description="ID"
+ *   ),
+ *   @SWG\Property(
+ *     property="name",
+ *     type="string",
+ *     description="Name"
+ *   ),
+ *   @SWG\Property(
+ *     property="lastname",
+ *     type="string",
+ *     description="Name"
+ *   ),
+ *   @SWG\Property(
+ *     property="dni",
+ *     type="integer",
+ *     description="D.N.I."
+ *   ),
+ *   @SWG\Property(
+ *     property="email",
+ *     type="string",
+ *     description="Emails"
+ *   ),
+ * ),
+ *
+ *
+ * @SWG\Definition(
+ *   definition="ClientInput",
+ *   required={"name", "lastname", "dni"},
+ *    @SWG\Property(
+ *      property="name",
+ *      type="string",
+ *      example="Foo",
+ *    ),
+ *    @SWG\Property(
+ *      property="lastname",
+ *      type="string",
+ *      example="Bar",
+ *    ),
+ *    @SWG\Property(
+ *      property="dni",
+ *      type="integer",
+ *      example="12345678",
+ *    ),
+ *    @SWG\Property(
+ *      property="email",
+ *      type="string",
+ *      example="example@gmail.com",
+ *    ),
+ *  ),
+ *
  * @property string name
  * @property string lastname
  * @property int dni

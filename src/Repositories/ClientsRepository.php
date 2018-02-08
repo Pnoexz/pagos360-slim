@@ -102,6 +102,7 @@ class ClientsRepository extends DatabaseRepository
      * @param string|null $email
      *
      * @return Client
+     * @throws DatabaseException
      */
     public function create(
         string $name,
@@ -109,13 +110,17 @@ class ClientsRepository extends DatabaseRepository
         int $dni,
         string $email = null
     ) {
-        /** @var Client $client */
-        $client = $this->getMapper()->build([
-            'name' => $name,
-            'lastname' => $lastname,
-            'dni' => $dni,
-            'email' => $email,
-        ]);
+        try {
+            /** @var Client $client */
+            $client = $this->getMapper()->build([
+                'name' => $name,
+                'lastname' => $lastname,
+                'dni' => $dni,
+                'email' => $email,
+            ]);
+        } catch (\Exception $e) {
+            throw new DatabaseException([], $e);
+        }
 
         $this->saveEntity($client, self::ENTITY_ACTION_SAVE);
 
@@ -209,7 +214,8 @@ class ClientsRepository extends DatabaseRepository
             $client = $this->get($id);
             $this->getMapper()->delete($client);
         } catch (\Pagos360\Exceptions\Clients\NotFoundException $e) {
-            // Client doesn't exists,
+            // Client doesn't exists, we don't need to do anything because the
+            // server was already at the state the client requested
         } catch (\Exception $e) {
             throw new DatabaseException([], $e);
         }

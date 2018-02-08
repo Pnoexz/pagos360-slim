@@ -11,6 +11,52 @@ use Pagos360\Repositories\ClientsRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
+/**
+ * @SWG\Get(
+ *   path="/clients",
+ *   summary="Get paginated list of clients",
+ *   tags={"Clients"},
+ *   @SWG\Parameter(
+ *     name="currentPage",
+ *     in="query",
+ *     required=false,
+ *     type="integer",
+ *   ),
+ *   @SWG\Parameter(
+ *     name="itemsPerPage",
+ *     in="query",
+ *     required=false,
+ *     type="integer",
+ *   ),
+ *   @SWG\Response(
+ *     response=200,
+ *     description="successful operation",
+ *     @SWG\Items(
+ *      ref="#/definitions/ClientsGetAllResponse",
+ *     ),
+ *   ),
+ * ),
+ *
+ *  @SWG\Definition(
+ *    definition="ClientsGetAllResponse",
+ *    @SWG\Property(
+ *      property="entity",
+ *      type="string",
+ *      example="Client",
+ *    ),
+ *    @SWG\Property(
+ *      property="pagination",
+ *      ref="#/definitions/Pagination",
+ *    ),
+ *    @SWG\Property(
+ *      property="data",
+ *      type="array",
+ *      @SWG\Items(
+ *        ref="#/definitions/Client"
+ *      ),
+ *    ),
+ *  ),
+ */
 class ActionGetAll extends ClientsController
 {
     /** @var ClientsRepository */

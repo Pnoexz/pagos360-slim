@@ -14,16 +14,20 @@ namespace Pagos360\Exceptions;
  * * Comply with PSR-3. See: https://www.php-fig.org/psr/psr-3/
  *
  * @package Pnoexz\MasterException
+ *
+ * @SWG\Definition(definition="MasterException")
  */
 
 abstract class MasterException extends \Exception implements
     \JsonSerializable
 {
     /**
-     * Contains the human readable your consumer SHOULD display in case no
-     * translation is available.
+     * Contains the human readable the consumer SHOULD display in case no
+     * translation is available. Consumers MUST NOT rely on this message to
+     * identify the exception.
      *
      * @var string
+     * @SWG\Property()
      */
     protected $message;
 
@@ -33,8 +37,21 @@ abstract class MasterException extends \Exception implements
      * For more information, visit: https://httpstatuses.com/
      *
      * @var int
+     * @SWG\Property(
+     *   description="Http status for this response. This is provided in case
+           the client doesn't support HTTP statuses.",
+     *   example="503",
+     * )
      */
     protected $httpStatus = 500;
+
+    /**
+     * Stores the unique string to identify this exception and act accordingly.
+     *
+     * @var string
+     * @SWG\Property()
+     */
+    protected $class;
 
     /**
      * A default PSR-3 compliant level for the exception if none is given.
@@ -60,6 +77,8 @@ abstract class MasterException extends \Exception implements
         if (!empty($data)) {
             $this->data = $data;
         }
+
+        $this->class = get_class($this);
     }
 
     /**
@@ -114,7 +133,7 @@ abstract class MasterException extends \Exception implements
     public function jsonSerialize()
     {
         $output = [
-            'class' => get_class($this),
+            'class' => $this->class,
             'message' => $this->message,
             'httpStatusCode' => $this->httpStatus,
         ];

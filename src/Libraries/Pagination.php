@@ -6,6 +6,11 @@
 
 namespace Pagos360\Libraries;
 
+/**
+ * Class Pagination
+ *
+ * @SWG\Definition()
+ */
 class Pagination implements \JsonSerializable
 {
     /**
@@ -32,16 +37,19 @@ class Pagination implements \JsonSerializable
 
     /**
      * @var int
+     * @SWG\Property(format="int32")
      */
     protected $currentPage;
 
     /**
      * @var int
+     * @SWG\Property(format="int32")
      */
     protected $itemsPerPage;
 
     /**
      * @var int
+     * @SWG\Property(format="int32")
      */
     protected $totalItems;
 

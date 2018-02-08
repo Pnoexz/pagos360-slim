@@ -17,6 +17,9 @@ abstract class SpotEntity extends Entity
      */
     public function getField(string $field)
     {
+        if (isset($this->_dataModified[$field])) {
+            return $this->_dataModified[$field];
+        }
         return $this->_data[$field];
     }
 

@@ -4,6 +4,18 @@
  * @license GPL v3.0
  */
 
+/**
+ * @SWG\Swagger(
+ *   schemes={"http", "https"},
+ *   basePath="/api/v1/",
+ *   @SWG\Info(
+ *     version="0.1.0",
+ *     title="Pagos360 test API",
+ *   ),
+ * ),
+ */
+
+
 $app->group('/api/v1', function () use ($app) {
     $app->group('/clients', function () use ($app) {
         $app->get(

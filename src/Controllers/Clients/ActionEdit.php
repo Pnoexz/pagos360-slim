@@ -10,6 +10,27 @@ use Pagos360\Repositories\ClientsRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
+/**
+ * @todo: add parameters
+ * @SWG\Put(
+ *   path="/clients/{clientId}",
+ *   summary="Edit a client",
+ *   tags={"Clients"},
+ *   @SWG\Parameter(
+ *     name="clientId",
+ *     in="path",
+ *     required=true,
+ *     type="integer",
+ *   ),
+ *   @SWG\Response(
+ *     response=201,
+ *     description="successful operation",
+ *     @SWG\Items(
+ *      ref="#/definitions/ClientsGetOneResponse"),
+ *     ),
+ *   ),
+ * ),
+ */
 class ActionEdit extends ClientsController
 {
     /** @var ClientsRepository */

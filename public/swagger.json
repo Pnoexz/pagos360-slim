@@ -1,0 +1,258 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Pagos360 test API",
+        "version": "0.1.0"
+    },
+    "basePath": "/api/v1/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/clients/{clientId}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get a client",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ClientsGetOneResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Edit a client",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ClientsGetOneResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Deletes a client",
+                "parameters": [
+                    {
+                        "name": "clientId",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get paginated list of clients",
+                "parameters": [
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ClientsGetAllResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/status/database": {
+            "get": {
+                "tags": [
+                    "Status"
+                ],
+                "summary": "Database status",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/StatusOkResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/status": {
+            "get": {
+                "tags": [
+                    "Status"
+                ],
+                "summary": "General system status",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/StatusOkResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ClientsGetOneResponse": {
+            "required": [
+                "entity",
+                "kind",
+                "data"
+            ],
+            "properties": {
+                "entity": {
+                    "type": "string",
+                    "example": "Client"
+                },
+                "kind": {
+                    "type": "string",
+                    "example": "entity"
+                },
+                "data": {
+                    "$ref": "#/definitions/Client"
+                }
+            }
+        },
+        "ClientsGetAllResponse": {
+            "properties": {
+                "entity": {
+                    "type": "string",
+                    "example": "Client"
+                },
+                "pagination": {
+                    "$ref": "#/definitions/Pagination"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Client"
+                    }
+                }
+            }
+        },
+        "DatabaseNotAvailableResponse": {
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "OK"
+                }
+            }
+        },
+        "StatusOkResponse": {
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "OK"
+                }
+            }
+        },
+        "Client": {
+            "required": [
+                "name",
+                "langID",
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "description": "ID",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name",
+                    "type": "string"
+                },
+                "lastname": {
+                    "description": "Name",
+                    "type": "string"
+                },
+                "dni": {
+                    "description": "D.N.I.",
+                    "type": "integer"
+                },
+                "email": {
+                    "description": "Emails",
+                    "type": "string"
+                }
+            }
+        },
+        "Pagination": {
+            "properties": {
+                "currentPage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "itemsPerPage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "totalItems": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        }
+    },
+    "responses": {
+        "503": {
+            "description": "Service not available",
+            "schema": {
+                "$ref": "#/definitions/DatabaseNotAvailableResponse"
+            }
+        },
+        "500": {
+            "description": "Internal server error"
+        }
+    }
+}

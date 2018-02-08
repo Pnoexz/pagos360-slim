@@ -10,6 +10,45 @@ use Pagos360\Repositories\ClientsRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
+/**
+ * @SWG\Get(
+ *   path="/clients/{clientId}",
+ *   summary="Get a client",
+ *   tags={"Clients"},
+ *   @SWG\Parameter(
+ *     name="clientId",
+ *     in="path",
+ *     required=true,
+ *     type="integer",
+ *   ),
+ *   @SWG\Response(
+ *     response=200,
+ *     description="successful operation",
+ *     @SWG\Items(
+ *      ref="#/definitions/ClientsGetOneResponse"),
+ *     ),
+ *   ),
+ * ),
+ *
+ * @SWG\Definition(
+ *   definition="ClientsGetOneResponse",
+ *   required={"entity", "kind", "data"},
+ *    @SWG\Property(
+ *      property="entity",
+ *      type="string",
+ *      example="Client",
+ *    ),
+ *    @SWG\Property(
+ *      property="kind",
+ *      type="string",
+ *      example="entity",
+ *    ),
+ *    @SWG\Property(
+ *      property="data",
+ *      ref="#/definitions/Client",
+ *    ),
+ *  ),
+ */
 class ActionGet extends ClientsController
 {
     /** @var ClientsRepository */

@@ -9,6 +9,34 @@ namespace Pagos360\Controllers\Status;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
+/**
+ * @SWG\Get(
+ *   path="/status",
+ *   summary="General system status",
+ *   tags={"Status"},
+ *   @SWG\Response(
+ *     response=200,
+ *     description="successful operation",
+ *     @SWG\Items(
+ *      ref="#/definitions/StatusOkResponse"),
+ *     ),
+ *   ),
+ *   @SWG\Response(
+ *     response=500,
+ *     description="Internal server error",
+ *   ),
+ * ),
+ *
+ * @SWG\Definition(
+ *   definition="StatusOkResponse",
+ *   required={"status"},
+ *    @SWG\Property(
+ *      property="status",
+ *      type="string",
+ *      example="OK",
+ *    ),
+ *  ),
+ */
 class ActionPing
 {
     /**

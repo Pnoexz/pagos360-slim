@@ -10,6 +10,23 @@ use Pagos360\Repositories\ClientsRepository;
 use Slim\Http\Request as Request;
 use Slim\Http\Response as Response;
 
+/**
+ * @SWG\Delete(
+ *   path="/clients/{clientId}",
+ *   summary="Deletes a client",
+ *   tags={"Clients"},
+ *   @SWG\Parameter(
+ *     name="clientId",
+ *     in="path",
+ *     required=true,
+ *     type="integer",
+ *   ),
+ *   @SWG\Response(
+ *     response=204,
+ *     description="successful operation",
+ *   ),
+ * ),
+ */
 class ActionDelete extends ClientsController
 {
     /** @var ClientsRepository */

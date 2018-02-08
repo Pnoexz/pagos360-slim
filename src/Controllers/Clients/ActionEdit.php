@@ -34,6 +34,13 @@ use Slim\Http\Response as Response;
  *      ref="#/definitions/ClientsGetOneResponse",
  *     ),
  *   ),
+ *   @SWG\Response(
+ *     response=404,
+ *     description="Client not found",
+ *     @SWG\Items(
+ *      ref="#/definitions/ClientNotFoundExceptionResponse",
+ *     ),
+ *   ),
  * ),
  */
 class ActionEdit extends ClientsController

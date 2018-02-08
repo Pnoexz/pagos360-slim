@@ -120,6 +120,12 @@
                         "schema": {
                             "$ref": "#/definitions/ClientsGetOneResponse"
                         }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/ClientNotFoundExceptionResponse"
+                        }
                     }
                 }
             },

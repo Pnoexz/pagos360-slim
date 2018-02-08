@@ -30,6 +30,12 @@
                         "schema": {
                             "$ref": "#/definitions/ClientsGetOneResponse"
                         }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/ClientNotFoundExceptionResponse"
+                        }
                     }
                 }
             },
@@ -117,6 +123,12 @@
                         "schema": {
                             "$ref": "#/definitions/StatusOkResponse"
                         }
+                    },
+                    "503": {
+                        "description": "Service not available",
+                        "schema": {
+                            "$ref": "#/definitions/DatabaseNotAvailableResponse"
+                        }
                     }
                 }
             }
@@ -129,10 +141,13 @@
                 "summary": "General system status",
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "schema": {
                             "$ref": "#/definitions/StatusOkResponse"
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -159,6 +174,23 @@
                 }
             }
         },
+        "ClientNotFoundExceptionResponse": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/MasterException"
+                },
+                {
+                    "required": [
+                        "class"
+                    ],
+                    "properties": {
+                        "class": {
+                            "example": "Pagos360\\Exceptions\\Clients\\NotFoundException"
+                        }
+                    }
+                }
+            ]
+        },
         "ClientsGetAllResponse": {
             "properties": {
                 "entity": {
@@ -177,15 +209,21 @@
             }
         },
         "DatabaseNotAvailableResponse": {
-            "required": [
-                "status"
-            ],
-            "properties": {
-                "status": {
-                    "type": "string",
-                    "example": "OK"
+            "allOf": [
+                {
+                    "$ref": "#/definitions/MasterException"
+                },
+                {
+                    "required": [
+                        "class"
+                    ],
+                    "properties": {
+                        "class": {
+                            "example": "Pagos360\\Exceptions\\DatabaseNotAvailableException"
+                        }
+                    }
                 }
-            }
+            ]
         },
         "StatusOkResponse": {
             "required": [
@@ -227,6 +265,23 @@
                 }
             }
         },
+        "MasterException": {
+            "properties": {
+                "message": {
+                    "description": "Contains the human readable the consumer SHOULD display in case no\ntranslation is available. Consumers MUST NOT rely on this message to\nidentify the exception.",
+                    "type": "string"
+                },
+                "httpStatus": {
+                    "description": "Http status for this response. This is provided in case\n           the client doesn't support HTTP statuses.",
+                    "type": "integer",
+                    "example": "503"
+                },
+                "class": {
+                    "description": "Stores the unique string to identify this exception and act accordingly.",
+                    "type": "string"
+                }
+            }
+        },
         "Pagination": {
             "properties": {
                 "currentPage": {
@@ -242,17 +297,6 @@
                     "format": "int32"
                 }
             }
-        }
-    },
-    "responses": {
-        "503": {
-            "description": "Service not available",
-            "schema": {
-                "$ref": "#/definitions/DatabaseNotAvailableResponse"
-            }
-        },
-        "500": {
-            "description": "Internal server error"
         }
     }
 }

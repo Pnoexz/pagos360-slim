@@ -32,7 +32,7 @@ use Slim\Http\Response as Response;
  *     response=200,
  *     description="successful operation",
  *     @SWG\Items(
- *      ref="#/definitions/ClientsGetAllResponse"),
+ *      ref="#/definitions/ClientsGetAllResponse",
  *     ),
  *   ),
  * ),

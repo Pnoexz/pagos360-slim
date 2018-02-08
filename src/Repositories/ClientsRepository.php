@@ -209,7 +209,8 @@ class ClientsRepository extends DatabaseRepository
             $client = $this->get($id);
             $this->getMapper()->delete($client);
         } catch (\Pagos360\Exceptions\Clients\NotFoundException $e) {
-            // Client doesn't exists,
+            // Client doesn't exists, we don't need to do anything because the
+            // server was already at the state the client requested
         } catch (\Exception $e) {
             throw new DatabaseException([], $e);
         }

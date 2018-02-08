@@ -25,7 +25,14 @@ use Slim\Http\Response as Response;
  *     response=200,
  *     description="successful operation",
  *     @SWG\Items(
- *      ref="#/definitions/ClientsGetOneResponse"),
+ *      ref="#/definitions/ClientsGetOneResponse",
+ *     ),
+ *   ),
+ *   @SWG\Response(
+ *     response=404,
+ *     description="Client not found",
+ *     @SWG\Items(
+ *      ref="#/definitions/ClientNotFoundExceptionResponse",
  *     ),
  *   ),
  * ),
@@ -48,6 +55,20 @@ use Slim\Http\Response as Response;
  *      ref="#/definitions/Client",
  *    ),
  *  ),
+ * @SWG\Definition(
+ *   definition="ClientNotFoundExceptionResponse",
+ *   allOf={
+ *     @SWG\Schema(ref="#/definitions/MasterException"),
+ *     @SWG\Schema(
+ *       required={"class"},
+ *       @SWG\Property(
+ *         property="class",
+ *         example="Pagos360\Exceptions\Clients\NotFoundException",
+ *       ),
+ *     ),
+ *   },
+ * ),
+
  */
 class ActionGet extends ClientsController
 {

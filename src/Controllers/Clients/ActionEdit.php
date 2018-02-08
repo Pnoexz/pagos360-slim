@@ -26,7 +26,7 @@ use Slim\Http\Response as Response;
  *     response=201,
  *     description="successful operation",
  *     @SWG\Items(
- *      ref="#/definitions/ClientsGetOneResponse"),
+ *      ref="#/definitions/ClientsGetOneResponse",
  *     ),
  *   ),
  * ),
